@@ -18,7 +18,7 @@ const getImg = color => {
 };
 
 const Product = ({ product, removeFromCart, hasRemoveAction, color }) => {
-  //   console.log(product);
+  //   console.log(product.color);
   return (
     <div className="product">
       <img src={product[getImg(color)]} />

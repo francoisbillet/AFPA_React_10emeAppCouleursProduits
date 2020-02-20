@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import ProductList from "./ProductList";
 import ProductPage from "./ProductPage";
+import HomePage from "./HomePage";
 import Cart from "./Cart";
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -13,7 +14,11 @@ const useProducts = () => {
     fetch(`https://server-ten.now.sh`)
       .then(body => body.json())
       .then(response => {
-        setProducts(response);
+        setProducts(
+          response.map(product => {
+            return { ...product, color: "black" };
+          })
+        );
       });
   }, []);
 
@@ -62,17 +67,18 @@ function App() {
     notes,
     addNote
   ] = useProducts();
-  console.log(cart);
+  // console.log(cart);
   return (
     <BrowserRouter>
       <Header cart={cart} notes={notes} />
       <Switch>
         <Route exact path="/">
-          <div className="App">
+          <HomePage products={products} />
+          {/* <div className="App">
             <main className="content">
-              <ProductList products={products} color="black" />
+              <ProductList products={products} color="black"/>
             </main>
-          </div>
+          </div> */}
         </Route>
         <Route exact path="/product/:id/:color">
           <ProductPage products={products} cart={cart} addToCart={addToCart} />
